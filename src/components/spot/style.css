@@ -1,0 +1,11 @@
+.spot {
+  height: 30px;
+  width: 30px;
+  box-sizing: border-box;
+  border: 1px solid black;
+  font-size: 0.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+}
