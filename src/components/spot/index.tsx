@@ -4,7 +4,13 @@ import * as style from "./style.css";
 
 const SPOT_WIDTH = 30;
 
-const Header: FunctionalComponent = props => {
+export interface Props {
+    i: number;
+    j: number;
+    color: string;
+}
+
+const Header: FunctionalComponent<Props> = (props: Props) => {
     const top = props.i * SPOT_WIDTH;
     const left = props.j * SPOT_WIDTH;
     return (
