@@ -41,7 +41,7 @@ const Home: FunctionalComponent = () => {
         }
     }
 
-    function handleSizeChange(e) {
+    function handleSizeChange(e: any) {
         //console.log(e.target.value);
         setGridSize(e.target.value);
         setGame(new Game(e.target.value));
@@ -63,6 +63,7 @@ const Home: FunctionalComponent = () => {
                     type="range"
                     min="2"
                     max="50"
+                    //@ts-ignore
                     defaultValue={grid_size}
                     class="slider"
                     id="myRange"
