@@ -13,6 +13,12 @@ class Grid {
             }
         }
     }
+
+    getSpot(row: number, col: number): Spot | null {
+        if (row < this.grid.length && col < this.grid[0].length) {
+            return this.grid[row][col];
+        } else return null;
+    }
 }
 
 export default Grid;

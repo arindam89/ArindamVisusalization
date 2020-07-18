@@ -5,16 +5,17 @@ import * as style from "./style.css";
 import SpotUI from "../../components/spot";
 import Grid from "../../core/grid";
 
-const game_size = 20;
+const game_size = 10;
+const main_game = new Grid(game_size);
 
 const Home: FunctionalComponent = () => {
-    const [game, setGame] = useState(new Grid(game_size));
+    const [game, setGame] = useState(main_game);
     return (
         <div class={style.home}>
             <h1>Home</h1>
             <button
                 onClick={() => {
-                    setGame(new Grid(game_size));
+                    console.log("Reset clicked");
                 }}
             >
                 Reset Me
@@ -24,9 +25,7 @@ const Home: FunctionalComponent = () => {
             <div class={style.container}>
                 {game.grid.map(row => {
                     return row.map(spot => {
-                        return (
-                            <SpotUI i={spot.i} j={spot.j} color={spot.color} />
-                        );
+                        return <SpotUI spot={spot} />;
                     });
                 })}
             </div>
