@@ -6,6 +6,13 @@
 	margin: auto;
 }
 
+.actions {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+
 .container {
 	position: relative;
+	margin: auto;
 }
