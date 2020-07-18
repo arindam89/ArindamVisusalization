@@ -11,18 +11,32 @@ const Home: FunctionalComponent = () => {
     const [game, setGame] = useState(new Game(game_size));
     const [move, setMove] = useState(false);
 
-    function handleMouseDown() {
+    function handleMouseDown(e: any) {
+        console.log("handleMouseDown", e);
+        //e.preventDefault();
         setMove(true);
     }
 
-    function handleMouseUp() {
+    function handleMouseUp(e: any) {
+        console.log("handleMouseUp", e);
         setMove(false);
     }
 
     function handleMouseMove(e: any) {
         if (move) {
-            // console.log(e);
+            console.log("handleMouseMove", e);
             e.target.dispatchEvent(new CustomEvent("mouse_moved"));
+        }
+    }
+
+    function handleTouchMove(e: any) {
+        if (move) {
+            console.log("handleTouchMove", e);
+            const loc = e.touches[0];
+            // @ts-ignore
+            const el = document.elementFromPoint(loc.clientX, loc.clientY);
+            // @ts-ignore
+            el.dispatchEvent(new CustomEvent("mouse_moved"));
         }
     }
 
@@ -32,6 +46,9 @@ const Home: FunctionalComponent = () => {
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
             onMouseMove={handleMouseMove}
+            onTouchStart={handleMouseDown}
+            onTouchEnd={handleMouseUp}
+            onTouchMove={handleTouchMove}
         >
             <h4>Select a start and end and some barriers</h4>
             <button

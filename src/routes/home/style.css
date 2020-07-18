@@ -1,8 +1,9 @@
 
 .home {
 	padding: 56px 20px;
-	min-height: 100%;
-	width: 100%;
+	min-height: 50vh;
+	width: 80vw;
+	margin: auto;
 }
 
 .container {

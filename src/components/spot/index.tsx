@@ -5,7 +5,7 @@ import Spot from "../../core/spot";
 import * as style from "./style.css";
 import Game from "../../core/grid";
 
-const SPOT_WIDTH = 20;
+const SPOT_WIDTH = 10;
 
 export interface Props {
     spot: Spot;
