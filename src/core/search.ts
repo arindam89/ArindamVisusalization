@@ -72,13 +72,14 @@ export function* startSolver(game: Game) {
     open_spots.set(startSet.spot, true);
 
     while (!open_set.empty()) {
-        console.log(open_set.peek());
+        console.log("Peeking:", open_set.peek());
         const current = open_set.pop();
-        open_spots.set(current.spot, false);
+        open_spots.delete(current.spot);
 
         if (current.spot.isEndSpot()) {
             // Done
-            console.log("Done found it");
+            console.log("Done found it", parent);
+            processPath(parent, start, end);
             return true;
         }
         current.spot.neighbours.forEach((n: Spot) => {
@@ -89,19 +90,27 @@ export function* startSolver(game: Game) {
                 parent.set(n, current.spot);
                 console.log("Parent of is", n, current.spot);
                 if (!open_spots[n]) {
-                    open_spots.set(n, true);
                     count++;
+                    open_spots.set(n, true);
                     open_set.push(new SetItem(f_score[n.i][n.j], count, n));
-                    n.markOpenToVisit();
+                    if (!n.isEndSpot()) n.markOpenToVisit();
                     //window.dispatchEvent(new CustomEvent('draw_game'))
                 }
             }
         });
 
-        if (!current.spot.isStartSpot()) {
+        if (!current.spot.isStartSpot() && !current.spot.isEndSpot()) {
             current.spot.markVisited();
             yield count;
         }
     }
-    console.log(parent);
+}
+
+function processPath(chain, start, end) {
+    let spot = end;
+    while (spot !== start) {
+        spot = chain.get(spot);
+        if (!spot.isStartSpot()) spot.makePathSpot();
+        console.log("Path: ", spot.i, spot.j);
+    }
 }

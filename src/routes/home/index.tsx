@@ -5,7 +5,7 @@ import * as style from "./style.css";
 import SpotUI from "../../components/spot";
 import Game from "../../core/grid";
 
-const game_size = 5;
+const game_size = 50;
 
 const Home: FunctionalComponent = () => {
     const [game, setGame] = useState(new Game(game_size));
@@ -29,7 +29,7 @@ const Home: FunctionalComponent = () => {
                         if (step.done) {
                             clearInterval(interval);
                         }
-                    }, 100);
+                    }, 10);
                 }}
             >
                 Start Exploring

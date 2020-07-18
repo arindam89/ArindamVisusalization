@@ -5,7 +5,7 @@ import Spot from "../../core/spot";
 import * as style from "./style.css";
 import Game from "../../core/grid";
 
-const SPOT_WIDTH = 30;
+const SPOT_WIDTH = 10;
 
 export interface Props {
     spot: Spot;
@@ -26,7 +26,7 @@ const SpotUI: FunctionalComponent<Props> = (props: Props) => {
     useEffect(() => {
         const r = setInterval(() => {
             setColor(props.spot.color);
-        }, 100);
+        }, 10);
         return () => {
             clearInterval(r);
         };
@@ -57,7 +57,7 @@ const SpotUI: FunctionalComponent<Props> = (props: Props) => {
             style={{ left, top, backgroundColor: color }}
             onClick={handleSpotClick}
         >
-            [{props.spot.i}, {props.spot.j}]
+            {/*[{props.spot.i}, {props.spot.j}]*/}
         </div>
     );
 };

@@ -19,6 +19,10 @@ class Spot {
         return Color[randomKey];
     }
 
+    makePathSpot() {
+        this.color = Color.BLACK;
+    }
+
     makeStartSpot() {
         this.color = Color.GREEN;
     }
@@ -32,6 +36,7 @@ class Spot {
     }
 
     isEndSpot(): boolean {
+        console.log("isEndSpot:", this.color);
         return this.color === Color.RED;
     }
 
@@ -69,7 +74,7 @@ class Spot {
 
     updateNeighbors(grid: Array<Array<Spot>>, size: number) {
         // UP
-        if (this.i - 1 > 0 && !grid[this.i - 1][this.j].isClosed()) {
+        if (this.i - 1 >= 0 && !grid[this.i - 1][this.j].isClosed()) {
             this.neighbours.push(grid[this.i - 1][this.j]);
         }
 
@@ -79,7 +84,7 @@ class Spot {
         }
 
         // LEFT
-        if (this.j - 1 > 0 && !grid[this.i][this.j - 1].isClosed()) {
+        if (this.j - 1 >= 0 && !grid[this.i][this.j - 1].isClosed()) {
             this.neighbours.push(grid[this.i][this.j - 1]);
         }
 
