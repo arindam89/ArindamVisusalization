@@ -1,5 +1,5 @@
 import { FunctionalComponent, h } from "preact";
-import { useState } from "preact/hooks";
+import { useState, useEffect } from "preact/hooks";
 import { Link } from "preact-router/match";
 import Spot from "../../core/spot";
 import * as style from "./style.css";
@@ -13,12 +13,15 @@ export interface Props {
 }
 
 const SpotUI: FunctionalComponent<Props> = (props: Props) => {
-    console.log(props.spot);
     const top = props.spot.i * SPOT_WIDTH;
     const left = props.spot.j * SPOT_WIDTH;
     const spot = props.spot;
     const game = props.game;
     const [color, setColor] = useState(props.spot.color);
+
+    useEffect(() => {
+        setColor(props.spot.color);
+    }, [props.spot]);
 
     function handleSpotClick(e) {
         if (spot.isOpen()) {
