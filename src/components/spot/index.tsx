@@ -3,27 +3,37 @@ import { useState } from "preact/hooks";
 import { Link } from "preact-router/match";
 import Spot from "../../core/spot";
 import * as style from "./style.css";
+import Grid from "../../core/grid";
 
 const SPOT_WIDTH = 30;
 
 export interface Props {
     spot: Spot;
+    game: Grid;
 }
 
-const Header: FunctionalComponent<Props> = (props: Props) => {
+const SpotUI: FunctionalComponent<Props> = (props: Props) => {
     console.log(props.spot);
     const top = props.spot.i * SPOT_WIDTH;
     const left = props.spot.j * SPOT_WIDTH;
     const spot = props.spot;
+    const game = props.game;
     const [color, setColor] = useState(props.spot.color);
 
     function handleSpotClick(e) {
         if (spot.isOpen()) {
-            spot.markClosed();
+            if (!game.hasStart()) {
+                spot.makeStartSpot();
+                game.setStart(spot);
+            } else if (!game.hasEnd()) {
+                spot.makeEndSpot();
+                game.setEnd(spot);
+            } else {
+                spot.markClosed();
+            }
         } else if (spot.isClosed()) {
             spot.markOpen();
         }
-
         setColor(spot.color);
     }
 
@@ -38,4 +48,4 @@ const Header: FunctionalComponent<Props> = (props: Props) => {
     );
 };
 
-export default Header;
+export default SpotUI;

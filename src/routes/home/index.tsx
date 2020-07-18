@@ -6,16 +6,16 @@ import SpotUI from "../../components/spot";
 import Grid from "../../core/grid";
 
 const game_size = 10;
-const main_game = new Grid(game_size);
 
 const Home: FunctionalComponent = () => {
-    const [game, setGame] = useState(main_game);
+    const [game, setGame] = useState(new Grid(game_size));
     return (
         <div class={style.home}>
             <h1>Home</h1>
             <button
                 onClick={() => {
                     console.log("Reset clicked");
+                    setGame(new Grid(game_size));
                 }}
             >
                 Reset Me
@@ -25,7 +25,7 @@ const Home: FunctionalComponent = () => {
             <div class={style.container}>
                 {game.grid.map(row => {
                     return row.map(spot => {
-                        return <SpotUI spot={spot} />;
+                        return <SpotUI spot={spot} game={game} />;
                     });
                 })}
             </div>

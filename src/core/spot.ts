@@ -17,11 +17,27 @@ class Spot {
         return Color[randomKey];
     }
 
+    makeStartSpot() {
+        this.color = Color.GREEN;
+    }
+
+    isStartSpot(): boolean {
+        return this.color === Color.GREEN;
+    }
+
+    makeEndSpot() {
+        this.color = Color.RED;
+    }
+
+    isEndSpot(): boolean {
+        return this.color === Color.RED;
+    }
+
     markClosed() {
         this.color = Color.GREY;
     }
 
-    isClosed() {
+    isClosed(): boolean {
         return this.color === Color.GREY;
     }
 

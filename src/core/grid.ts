@@ -3,6 +3,8 @@ import Spot from "./spot";
 class Grid {
     size: number;
     grid: Array<Array<Spot>>;
+    start?: Spot;
+    end?: Spot;
     constructor(size: number) {
         this.size = size;
         this.grid = [];
@@ -18,6 +20,30 @@ class Grid {
         if (row < this.grid.length && col < this.grid[0].length) {
             return this.grid[row][col];
         } else return null;
+    }
+
+    setStart(spot: Spot) {
+        this.start = spot;
+    }
+
+    hasStart() {
+        return this.start !== undefined;
+    }
+
+    resetStart() {
+        this.start = undefined;
+    }
+
+    setEnd(spot: Spot) {
+        this.end = spot;
+    }
+
+    hasEnd() {
+        return this.end !== undefined;
+    }
+
+    resetEnd() {
+        this.end = undefined;
     }
 }
 
