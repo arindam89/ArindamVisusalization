@@ -1,12 +1,15 @@
 import Spot from "./spot";
+import { startSolver } from "./search";
 
-class Grid {
+class Game {
     size: number;
     grid: Array<Array<Spot>>;
     start?: Spot;
     end?: Spot;
+    running: boolean;
     constructor(size: number) {
         this.size = size;
+        this.running = false;
         this.grid = [];
         for (let i = 0; i < size; i++) {
             if (!this.grid[i]) this.grid[i] = [];
@@ -26,6 +29,10 @@ class Grid {
         this.start = spot;
     }
 
+    getStart() {
+        return this.start;
+    }
+
     hasStart() {
         return this.start !== undefined;
     }
@@ -38,6 +45,10 @@ class Grid {
         this.end = spot;
     }
 
+    getEnd() {
+        return this.end;
+    }
+
     hasEnd() {
         return this.end !== undefined;
     }
@@ -45,6 +56,20 @@ class Grid {
     resetEnd() {
         this.end = undefined;
     }
+
+    startGame() {
+        console.log(`Game is starting`);
+        this.running = true;
+        startSolver(this);
+    }
+
+    isRunning() {
+        return this.running;
+    }
+
+    stopGame() {
+        this.running = false;
+    }
 }
 
-export default Grid;
+export default Game;

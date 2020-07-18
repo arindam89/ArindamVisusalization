@@ -3,13 +3,13 @@ import { useState, useEffect } from "preact/hooks";
 import { Link } from "preact-router/match";
 import Spot from "../../core/spot";
 import * as style from "./style.css";
-import Grid from "../../core/grid";
+import Game from "../../core/grid";
 
 const SPOT_WIDTH = 30;
 
 export interface Props {
     spot: Spot;
-    game: Grid;
+    game: Game;
 }
 
 const SpotUI: FunctionalComponent<Props> = (props: Props) => {
@@ -24,20 +24,22 @@ const SpotUI: FunctionalComponent<Props> = (props: Props) => {
     }, [props.spot]);
 
     function handleSpotClick(e) {
-        if (spot.isOpen()) {
-            if (!game.hasStart()) {
-                spot.makeStartSpot();
-                game.setStart(spot);
-            } else if (!game.hasEnd()) {
-                spot.makeEndSpot();
-                game.setEnd(spot);
-            } else {
-                spot.markClosed();
+        if (!game.isRunning()) {
+            if (spot.isOpen()) {
+                if (!game.hasStart()) {
+                    spot.makeStartSpot();
+                    game.setStart(spot);
+                } else if (!game.hasEnd()) {
+                    spot.makeEndSpot();
+                    game.setEnd(spot);
+                } else {
+                    spot.markClosed();
+                }
+            } else if (spot.isClosed()) {
+                spot.markOpen();
             }
-        } else if (spot.isClosed()) {
-            spot.markOpen();
+            setColor(spot.color);
         }
-        setColor(spot.color);
     }
 
     return (

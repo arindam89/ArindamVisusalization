@@ -5,10 +5,12 @@ class Spot {
     i: number;
     j: number;
     color: string;
+    neighbours: Spot[];
     constructor(i: number, j: number) {
         this.i = i;
         this.j = j;
         this.color = Color.WHITE;
+        this.neighbours = [];
     }
 
     getRandomColor() {
@@ -41,12 +43,50 @@ class Spot {
         return this.color === Color.GREY;
     }
 
+    markVisited() {
+        this.color = Color.YELLOW;
+    }
+
+    isVisited(): boolean {
+        return this.color === Color.YELLOW;
+    }
+
+    markOpenToVisit() {
+        this.color = Color.BLUE;
+    }
+
+    isOpenToVisit(): boolean {
+        return this.color === Color.BLUE;
+    }
+
     markOpen() {
         this.color = Color.WHITE;
     }
 
     isOpen() {
         return this.color === Color.WHITE;
+    }
+
+    updateNeighbors(grid: Array<Array<Spot>>, size: number) {
+        // UP
+        if (this.i - 1 > 0 && grid[this.i - 1][this.j].isOpen()) {
+            this.neighbours.push(grid[this.i - 1][this.j]);
+        }
+
+        // DOWN
+        if (this.i + 1 < size && grid[this.i + 1][this.j].isOpen()) {
+            this.neighbours.push(grid[this.i + 1][this.j]);
+        }
+
+        // LEFT
+        if (this.j - 1 > 0 && grid[this.i][this.j - 1].isOpen()) {
+            this.neighbours.push(grid[this.i][this.j - 1]);
+        }
+
+        // RIGHT
+        if (this.j + 1 < size && grid[this.i][this.j + 1].isOpen()) {
+            this.neighbours.push(grid[this.i][this.j + 1]);
+        }
     }
 }
 
