@@ -13,12 +13,6 @@ class Spot {
         this.neighbours = [];
     }
 
-    getRandomColor() {
-        const randomKey =
-            color_array[Math.floor(Math.random() * color_array.length)];
-        return Color[randomKey];
-    }
-
     makePathSpot() {
         this.color = Color.BLACK;
     }
@@ -36,7 +30,7 @@ class Spot {
     }
 
     isEndSpot(): boolean {
-        console.log("isEndSpot:", this.color);
+        // console.log("isEndSpot:", this.color);
         return this.color === Color.RED;
     }
 

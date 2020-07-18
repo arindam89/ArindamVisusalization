@@ -11,7 +11,6 @@ class Game {
         this.size = size;
         this.running = false;
         this.grid = [];
-        this.steps = 0;
         for (let i = 0; i < size; i++) {
             if (!this.grid[i]) this.grid[i] = [];
             for (let j = 0; j < size; j++) {
@@ -59,7 +58,7 @@ class Game {
     }
 
     startGame() {
-        console.log(`Game is starting`);
+        // console.log(`Game is starting`);
         this.running = true;
         return startSolver(this);
     }

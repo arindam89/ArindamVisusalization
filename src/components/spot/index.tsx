@@ -1,11 +1,11 @@
 import { FunctionalComponent, h } from "preact";
-import { useState, useEffect } from "preact/hooks";
+import { useState, useEffect, useRef } from "preact/hooks";
 import { Link } from "preact-router/match";
 import Spot from "../../core/spot";
 import * as style from "./style.css";
 import Game from "../../core/grid";
 
-const SPOT_WIDTH = 10;
+const SPOT_WIDTH = 20;
 
 export interface Props {
     spot: Spot;
@@ -18,6 +18,8 @@ const SpotUI: FunctionalComponent<Props> = (props: Props) => {
     const spot = props.spot;
     const game = props.game;
     const [color, setColor] = useState(props.spot.color);
+    const [drag, setDrag] = useState(false);
+    const ref = useRef(null);
     useEffect(() => {
         setColor(props.spot.color);
     }, [props.spot]);
@@ -32,7 +34,7 @@ const SpotUI: FunctionalComponent<Props> = (props: Props) => {
         };
     }, []);
 
-    function handleSpotClick(e) {
+    function handleSpotClick(e: any) {
         if (!game.isRunning()) {
             if (spot.isOpen()) {
                 if (!game.hasStart()) {
@@ -45,17 +47,30 @@ const SpotUI: FunctionalComponent<Props> = (props: Props) => {
                     spot.markClosed();
                 }
             } else if (spot.isClosed()) {
-                spot.markOpen();
+                //spot.markOpen();
             }
             setColor(spot.color);
         }
     }
+
+    useEffect(() => {
+        // @ts-ignore
+        const listen = ref.current.addEventListener(
+            "mouse_moved",
+            handleSpotClick
+        );
+        return () => {
+            // @ts-ignore
+            ref.current.removeEventListener("mouse_moved", handleSpotClick);
+        };
+    }, []);
 
     return (
         <div
             class={style.spot}
             style={{ left, top, backgroundColor: color }}
             onClick={handleSpotClick}
+            ref={ref}
         >
             {/*[{props.spot.i}, {props.spot.j}]*/}
         </div>

@@ -6,7 +6,7 @@ class SetItem {
     spot: Spot;
     f_score: number;
     count: number;
-    constructor(f_score, count, spot) {
+    constructor(f_score: number, count: number, spot: Spot) {
         this.f_score = f_score;
         this.count = count;
         this.spot = spot;
@@ -43,8 +43,8 @@ export function* startSolver(game: Game) {
     const end = game.getEnd();
     const size = game.size;
     const grid = game.grid;
-    const g_score = [];
-    const f_score = [];
+    const g_score: any = [];
+    const f_score: any = [];
 
     for (let i = 0; i < size; i++) {
         for (let j = 0; j < size; j++) {
@@ -55,31 +55,33 @@ export function* startSolver(game: Game) {
             f_score[i][j] = Number.MAX_SAFE_INTEGER;
         }
     }
+    //@ts-ignore
     g_score[start.i][start.j] = 0;
+    //@ts-ignore
     f_score[start.i][start.j] = h_distance(start!!, end!!);
 
-    console.log(g_score);
-    console.log(f_score);
-    console.log(grid);
+    // console.log(g_score);
+    // console.log(f_score);
+    // console.log(grid);
 
     // Main Algorithm
     let count = 0;
     const parent = new Map();
     const open_set = new TinyQueue([], compareItemWeight);
-    const startSet = new SetItem(0, count, start);
+    const startSet = new SetItem(0, count, start!!);
     open_set.push(startSet);
     const open_spots = new Map();
     open_spots.set(startSet.spot, true);
 
     while (!open_set.empty()) {
-        console.log("Peeking:", open_set.peek());
+        // console.log("Peeking:", open_set.peek());
         const current = open_set.pop();
         open_spots.delete(current.spot);
 
         if (current.spot.isEndSpot()) {
             // Done
-            console.log("Done found it", parent);
-            processPath(parent, start, end);
+            // console.log("Done found it", parent);
+            processPath(parent, start!!, end!!);
             return true;
         }
         current.spot.neighbours.forEach((n: Spot) => {
@@ -88,8 +90,8 @@ export function* startSolver(game: Game) {
                 g_score[n.i][n.j] = temp_g_score;
                 f_score[n.i][n.j] = temp_g_score + h_distance(n, end!!);
                 parent.set(n, current.spot);
-                console.log("Parent of is", n, current.spot);
-                if (!open_spots[n]) {
+                // console.log("Parent of is", n, current.spot);
+                if (!open_spots.get(n)) {
                     count++;
                     open_spots.set(n, true);
                     open_set.push(new SetItem(f_score[n.i][n.j], count, n));
@@ -106,11 +108,11 @@ export function* startSolver(game: Game) {
     }
 }
 
-function processPath(chain, start, end) {
+function processPath(chain: any, start: Spot, end: Spot) {
     let spot = end;
     while (spot !== start) {
         spot = chain.get(spot);
         if (!spot.isStartSpot()) spot.makePathSpot();
-        console.log("Path: ", spot.i, spot.j);
+        // console.log("Path: ", spot.i, spot.j);
     }
 }
