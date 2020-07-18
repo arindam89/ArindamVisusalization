@@ -69,22 +69,22 @@ class Spot {
 
     updateNeighbors(grid: Array<Array<Spot>>, size: number) {
         // UP
-        if (this.i - 1 > 0 && grid[this.i - 1][this.j].isOpen()) {
+        if (this.i - 1 > 0 && !grid[this.i - 1][this.j].isClosed()) {
             this.neighbours.push(grid[this.i - 1][this.j]);
         }
 
         // DOWN
-        if (this.i + 1 < size && grid[this.i + 1][this.j].isOpen()) {
+        if (this.i + 1 < size && !grid[this.i + 1][this.j].isClosed()) {
             this.neighbours.push(grid[this.i + 1][this.j]);
         }
 
         // LEFT
-        if (this.j - 1 > 0 && grid[this.i][this.j - 1].isOpen()) {
+        if (this.j - 1 > 0 && !grid[this.i][this.j - 1].isClosed()) {
             this.neighbours.push(grid[this.i][this.j - 1]);
         }
 
         // RIGHT
-        if (this.j + 1 < size && grid[this.i][this.j + 1].isOpen()) {
+        if (this.j + 1 < size && !grid[this.i][this.j + 1].isClosed()) {
             this.neighbours.push(grid[this.i][this.j + 1]);
         }
     }

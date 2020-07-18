@@ -23,19 +23,19 @@ function h_distance(spot1: Spot, spot2: Spot) {
 
 function compareItemWeight(item1: SetItem, item2: SetItem) {
     if (item1.f_score < item2.f_score) {
-        return 1;
+        return -1;
     }
 
     if (item1.f_score > item2.f_score) {
-        return -1;
+        return 1;
     }
 
     // Tie Breaker
     if (item1.count < item2.count) {
-        return 1;
+        return -1;
     }
 
-    return -1;
+    return 1;
 }
 
 export function* startSolver(game: Game) {
@@ -76,8 +76,9 @@ export function* startSolver(game: Game) {
         const current = open_set.pop();
         open_spots.set(current.spot, false);
 
-        if (current.spot == end) {
+        if (current.spot.isEndSpot()) {
             // Done
+            console.log("Done found it");
             return true;
         }
         current.spot.neighbours.forEach((n: Spot) => {

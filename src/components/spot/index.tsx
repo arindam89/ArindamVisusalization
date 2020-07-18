@@ -18,10 +18,19 @@ const SpotUI: FunctionalComponent<Props> = (props: Props) => {
     const spot = props.spot;
     const game = props.game;
     const [color, setColor] = useState(props.spot.color);
-
     useEffect(() => {
         setColor(props.spot.color);
     }, [props.spot]);
+
+    // This is what makes rendering of the same spot with different color possible.
+    useEffect(() => {
+        const r = setInterval(() => {
+            setColor(props.spot.color);
+        }, 100);
+        return () => {
+            clearInterval(r);
+        };
+    }, []);
 
     function handleSpotClick(e) {
         if (!game.isRunning()) {

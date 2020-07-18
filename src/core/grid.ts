@@ -11,6 +11,7 @@ class Game {
         this.size = size;
         this.running = false;
         this.grid = [];
+        this.steps = 0;
         for (let i = 0; i < size; i++) {
             if (!this.grid[i]) this.grid[i] = [];
             for (let j = 0; j < size; j++) {

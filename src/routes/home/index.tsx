@@ -5,11 +5,10 @@ import * as style from "./style.css";
 import SpotUI from "../../components/spot";
 import Game from "../../core/grid";
 
-const game_size = 10;
+const game_size = 5;
 
 const Home: FunctionalComponent = () => {
     const [game, setGame] = useState(new Game(game_size));
-    const [steps, setSteps] = useState(0);
     return (
         <div class={style.home}>
             <h1>Home</h1>
@@ -24,10 +23,13 @@ const Home: FunctionalComponent = () => {
             <button
                 onClick={() => {
                     console.log("Start Game clicked");
-                    const s = game.startGame();
-                    for (const step of s) {
-                        setSteps(step);
-                    }
+                    const gameSteps = game.startGame();
+                    const interval = setInterval(() => {
+                        const step = gameSteps.next();
+                        if (step.done) {
+                            clearInterval(interval);
+                        }
+                    }, 100);
                 }}
             >
                 Start Exploring
@@ -37,7 +39,11 @@ const Home: FunctionalComponent = () => {
             <div class={style.container}>
                 {game.grid.map(row => {
                     return row.map(spot => {
-                        return <SpotUI spot={spot} game={game} />;
+                        return (
+                            <div key={spot}>
+                                <SpotUI spot={spot} game={game} />
+                            </div>
+                        );
                     });
                 })}
             </div>
