@@ -60,7 +60,7 @@ class Game {
     startGame() {
         console.log(`Game is starting`);
         this.running = true;
-        startSolver(this);
+        return startSolver(this);
     }
 
     isRunning() {

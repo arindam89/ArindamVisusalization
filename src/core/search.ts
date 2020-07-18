@@ -38,7 +38,7 @@ function compareItemWeight(item1: SetItem, item2: SetItem) {
     return -1;
 }
 
-export function startSolver(game: Game) {
+export function* startSolver(game: Game) {
     const start = game.getStart();
     const end = game.getEnd();
     const size = game.size;
@@ -69,12 +69,12 @@ export function startSolver(game: Game) {
     const startSet = new SetItem(0, count, start);
     open_set.push(startSet);
     const open_spots = new Map();
-    open_spots[startSet.spot] = true;
+    open_spots.set(startSet.spot, true);
 
     while (!open_set.empty()) {
         console.log(open_set.peek());
         const current = open_set.pop();
-        open_spots[current.spot] = false;
+        open_spots.set(current.spot, false);
 
         if (current.spot == end) {
             // Done
@@ -85,9 +85,10 @@ export function startSolver(game: Game) {
             if (temp_g_score < g_score[n.i][n.j]) {
                 g_score[n.i][n.j] = temp_g_score;
                 f_score[n.i][n.j] = temp_g_score + h_distance(n, end!!);
-                parent[n] = current;
+                parent.set(n, current.spot);
+                console.log("Parent of is", n, current.spot);
                 if (!open_spots[n]) {
-                    open_spots[n] = true;
+                    open_spots.set(n, true);
                     count++;
                     open_set.push(new SetItem(f_score[n.i][n.j], count, n));
                     n.markOpenToVisit();
@@ -98,6 +99,7 @@ export function startSolver(game: Game) {
 
         if (!current.spot.isStartSpot()) {
             current.spot.markVisited();
+            yield count;
         }
     }
     console.log(parent);

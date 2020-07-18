@@ -9,6 +9,7 @@ const game_size = 10;
 
 const Home: FunctionalComponent = () => {
     const [game, setGame] = useState(new Game(game_size));
+    const [steps, setSteps] = useState(0);
     return (
         <div class={style.home}>
             <h1>Home</h1>
@@ -23,7 +24,10 @@ const Home: FunctionalComponent = () => {
             <button
                 onClick={() => {
                     console.log("Start Game clicked");
-                    game.startGame();
+                    const s = game.startGame();
+                    for (const step of s) {
+                        setSteps(step);
+                    }
                 }}
             >
                 Start Exploring
